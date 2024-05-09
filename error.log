@@ -1,0 +1,20 @@
+gcc -Wall -Wextra -Werror -pedantic -Iinclude -std=c99 -c -o obj/msg.o src/msg.c
+src/msg.c:3:35: error: missing braces around initializer [-Werror=missing-braces]
+    3 | const char* err_msg_gen[100][20]= {
+      |                                   ^
+    4 |         "No error",
+      |         {
+    5 |         "Unknown Error"
+    6 | };
+      | }
+src/msg.c:7:37: error: ISO C forbids empty initializer braces before C2X [-Werror=pedantic]
+    7 | const char* err_msg_args[100][20] = {
+      |                                     ^
+src/msg.c:10:36: error: ISO C forbids empty initializer braces before C2X [-Werror=pedantic]
+   10 | const char* err_msg_dir[100][20] = {
+      |                                    ^
+src/msg.c:13:37: error: ISO C forbids empty initializer braces before C2X [-Werror=pedantic]
+   13 | const char* err_msg_file[100][20] = {
+      |                                     ^
+cc1: all warnings being treated as errors
+make: *** [Makefile:45: obj/msg.o] Error 1
