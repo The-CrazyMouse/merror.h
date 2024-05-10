@@ -1,3 +1,8 @@
+// Todo list:
+// TODO: add a check for if the error was changed
+// TODO: add a check for if the error was handled
+
+
 #ifndef MERROR_H
 #define MERROR_H
 
@@ -7,12 +12,14 @@
 #include "msg.h"
 
 
+
 typedef enum {
 
 	//general errors
 	// 000 - 099
 	NO_ERROR = 000,
 	UNKNOWN_ERROR = 001,
+	MESSAGE_NOT_FOUND = 002,
 
 	//argument errors
 	// 100 - 199
@@ -44,16 +51,15 @@ typedef enum {
 
 
 typedef struct {
-	Error error;
+	const Error* error;
 	const char* message;
 } Merror;
 
 extern Merror error;
 
-void merror_set(Error error);
-// void get_msg(Error error);
-// // void perror();
-// void pnum_error();
-// void pmsg_error();
+void merror(Error error);
+void errorP();
+void errorPnum();
+void errorPmsg();
 
 #endif // !MERROR_H

@@ -1,9 +1,12 @@
+// Todo List:
+// TODO: add a check to see if the message actually exists
+
+
+
 #ifndef MSG_H
 #define MSG_H
 
-const char* err_msg_gen[100][20];
-const char* err_msg_args[100][20];
-const char* err_msg_dir[100][20];
-const char* err_msg_file[100][20];
+// WARNING: this function does not check if the message actually exists
+const char* getMsg();
 
 #endif // !MSG_H

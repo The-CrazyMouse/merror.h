@@ -38,20 +38,20 @@ $(STATIC_LIB): $(OBJ_FILES) | $(LIB_DIR)/static
 
 # Dynamic library target
 $(DYNAMIC_LIB): $(OBJ_FILES) | $(LIB_DIR)/dynamic
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -shared -o $@ $^
 	
 # Object files target
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -fPIC -o $@ $<
 
 # Test executables
 $(BIN_DIR)/%: $(TESTS_DIR)/%.c $(STATIC_LIB)
-	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $< -L$(LIB_DIR)/static -llibrary_name -o $@s
+	mkdir -p $(@D)
+	$(CC) $(CFLAGS) $< -L$(LIB_DIR)/static -lmerror -o $@s
 
 # Create directories
 $(OBJ_DIR) $(LIB_DIR)/static $(LIB_DIR)/dynamic:
-	@echo "Creating directories"
+	# @echo "Creating directories"
 	mkdir -p $@
 
 # Clean
