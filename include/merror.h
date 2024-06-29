@@ -1,17 +1,11 @@
-// Todo list:
-// TODO: add a check for if the error was changed
-// TODO: add a check for if the error was handled
-
-
 #ifndef MERROR_H
 #define MERROR_H
 
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include "msg.h"
-
-
 
 typedef enum {
 
@@ -23,7 +17,7 @@ typedef enum {
 
 	//argument errors
 	// 100 - 199
-	NO_ARGUMENT = 100,
+	NO_ARGUMENTS = 100,
 	INVALID_COMMAND = 101,
 	TOO_FEW_ARGUMENTS = 102,
 	TOO_MANY_ARGUMENTS = 103,
@@ -53,11 +47,19 @@ typedef enum {
 typedef struct {
 	const Error* error;
 	const char* message;
+	const bool* handled;
 } Merror;
 
 extern Merror error;
+extern Merror err_copy;
 
-void merror(Error error);
+// so aparanetly you don't need and can't have a static function declared in a header file
+// static void set_error_copy();
+
+bool merror(Error error);
+void handled();
+void unhandled();
+void clearError();
 void errorP();
 void errorPnum();
 void errorPmsg();
