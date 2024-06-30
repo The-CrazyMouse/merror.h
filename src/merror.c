@@ -1,4 +1,5 @@
 #include "merror.h"
+#include "msg.h"
 
 static const bool trueVal = true;
 static const bool falseVal = false;
