@@ -14,55 +14,56 @@ TEST_DIR := test
 
 # Source files
 SRC_FILES := $(wildcard $(SRC_DIR)/*.c)
-# Object files
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
-# Header files
-HEADERS := $(wildcard $(INCLUDE_DIR)/*.h)
-# Test source files
-TEST_SRCS := $(wildcard $(TESTS_DIR)/*.c)
-# Test executables
-TESTS := $(patsubst $(TESTS_DIR)/%.c, $(BIN_DIR)/%, $(TEST_SRCS))
+HEADERS := $(wildcard $(INC_DIR)/*.h)
+# Test source file
+TEST_SRC := $(TEST_DIR)/main.c
+# Test executable
+TEST_EXEC := $(BIN_DIR)/test_merror
 
 # Targets
 STATIC_LIB := $(LIB_DIR)/static/merror.a
 DYNAMIC_LIB := $(LIB_DIR)/dynamic/merror.so
 
-# Main target
+# All: this will compile the static and dynamic libraries
 .PHONY: all
 all: $(STATIC_LIB) $(DYNAMIC_LIB)
 	@echo "Compiling static and dynamic libraries"
 
-# Static library target
+# Static library
 $(STATIC_LIB): $(OBJ_FILES) | $(LIB_DIR)/static
-	ar rcs $@ $^
+	@echo "Creating static library"
+	@ar rcs $@ $^
 
-# Dynamic library target
+# Dynamic library
 $(DYNAMIC_LIB): $(OBJ_FILES) | $(LIB_DIR)/dynamic
-	$(CC) $(CFLAGS) -shared -o $@ $^
+	@echo "Creating dynamic library"
+	@$(CC) $(CFLAGS) -shared -o $@ $^
 	
-# Object files target
+# Object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c -fPIC -o $@ $<
+	@echo "Compiling object files from $<"
+	@$(CC) $(CFLAGS) -c -fPIC -o $@ $<
 
-# Test executables
-$(BIN_DIR)/%: $(TESTS_DIR)/%.c $(STATIC_LIB)
-	mkdir -p $(@D)
-	$(CC) $(CFLAGS) $< -L$(LIB_DIR)/static -lmerror -o $@s
+# Test executable
+$(TEST_EXEC): $(TEST_SRC) $(SRC_FILES) | $(BIN_DIR)
+	@echo "Creating test executable"
+	@$(CC) $(CFLAGS) -o $@ $(TEST_SRC) $(SRC_FILES)
 
 # Create directories
-$(OBJ_DIR) $(LIB_DIR)/static $(LIB_DIR)/dynamic:
-	# @echo "Creating directories"
-	mkdir -p $@
+$(OBJ_DIR) $(LIB_DIR)/static $(LIB_DIR)/dynamic $(BIN_DIR):
+	@echo "Creating directory $@"
+	@mkdir -p $@
+
+# Phony target for running tests
+.PHONY: test
+test: $(TEST_EXEC)
+	@echo "Running tests"
+	@echo "--------------------------------"
+	@$(TEST_EXEC)
 
 # Clean
 .PHONY: clean
 clean:
-	rm -rf $(OBJ_DIR) $(BIN_DIR) $(LIB_DIR) error.log
-
-# Phony target for running tests
-.PHONY: test
-test: $(TESTS)
-	@$(foreach test, $(TESTS), echo "Running $(test)"; $(test);)
-
-
-
+	@echo "Cleaning up"
+	@rm -rf $(OBJ_DIR) $(BIN_DIR) $(LIB_DIR) error.log

@@ -31,6 +31,7 @@ typedef enum {
 	// 200 - 299
 	DIRECTORY_NOT_FOUND= 200,
 	DIRECTORY_NOT_EMPTY = 201,
+	DIRECTORY_FAIL_CREATE = 202,
 	
 	
 	//file errors
@@ -44,23 +45,26 @@ typedef enum {
 
 
 typedef struct {
-	const Error* error;
-	const char* message;
-	const bool* handled;
+	Error error;
+	char* message;
+	bool handled;
 } Merror;
 
-extern Merror error;
-extern Merror err_copy;
 
 // so aparanetly you don't need and can't have a static function declared in a header file
 // static void set_error_copy();
 
-bool merror(Error error);
-void handled();
-void unhandled();
+bool setError(Error error);
+void handle();
+void unhandle();
 void clearError();
 void errorP();
 void errorPnum();
 void errorPmsg();
+bool hasError();
+int getCode();
+char* getMsg();
+bool getHandled();
+
 
 #endif // !MERROR_H

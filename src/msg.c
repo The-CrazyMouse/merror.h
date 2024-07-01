@@ -21,8 +21,9 @@ static const char* err_msg_args[100]= {
 };
 
 static const char* err_msg_dir[100]= {
-	"Directory Is Not Found",
+	"Directory Was Not Found",
 	"Directory Is Not Empty",
+	"Directory Failed To Create",
 };
 
 static const char* err_msg_file[100]= {
@@ -34,9 +35,8 @@ static const char* err_msg_file[100]= {
 
 
 
-const char* getMsg(){
+char* findMsg(Error err){
 
-	Error err = *(error.error);
 	const char* msg;
 
 	if (err < 100){
@@ -60,9 +60,9 @@ const char* getMsg(){
 		// return err_msg_gen[2][0];
 	}
 	if (msg == NULL){
-		return err_msg_gen[2];
+		return (char*)err_msg_gen[2];
 	}
 	else{
-		return msg;
+		return (char*)msg;
 	}
 }

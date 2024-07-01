@@ -6,7 +6,9 @@
 #ifndef MSG_H
 #define MSG_H
 
+#include "merror.h"
+
 // WARNING: this function does not check if the message actually exists
-const char* getMsg();
+char* findMsg(Error err);
 
 #endif // !MSG_H
