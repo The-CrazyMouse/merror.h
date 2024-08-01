@@ -1,10 +1,7 @@
 #ifndef MERROR_H
 #define MERROR_H
 
-#include <stdio.h>
-#include <string.h>
 #include <stdbool.h>
-#include <stdlib.h>
 
 typedef enum {
 
@@ -51,20 +48,20 @@ typedef struct {
 } Merror;
 
 
-// so aparanetly you don't need and can't have a static function declared in a header file
-// static void set_error_copy();
 
 bool setError(Error error);
-void handle();
-void unhandle();
-void clearError();
-void errorP();
-void errorPnum();
-void errorPmsg();
-bool hasError();
-int getCode();
-char* getMsg();
-bool getHandled();
+void handle(void);
+void unhandle(void);
+void clearError(void);
+void errorP(void);
+void errorPnum(void);
+void errorPmsg(void);
+bool hasError(void);
+int getCode(void);
+char* getMsg(void);
+bool getHandled(void);
 
+// so aparanetly you don't need and can't have a static function declared in a header file
+// static void set_error_copy();
 
 #endif // !MERROR_H

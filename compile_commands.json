@@ -1,0 +1,40 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pedantic",
+      "-Iinclude",
+      "-std=c99",
+      "-c",
+      "-fPIC",
+      "-o",
+      "obj/merror.o",
+      "src/merror.c"
+    ],
+    "directory": "/home/mouse/Documents/c/libraries/merror.h",
+    "file": "/home/mouse/Documents/c/libraries/merror.h/src/merror.c",
+    "output": "/home/mouse/Documents/c/libraries/merror.h/obj/merror.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-pedantic",
+      "-Iinclude",
+      "-std=c99",
+      "-c",
+      "-fPIC",
+      "-o",
+      "obj/msg.o",
+      "src/msg.c"
+    ],
+    "directory": "/home/mouse/Documents/c/libraries/merror.h",
+    "file": "/home/mouse/Documents/c/libraries/merror.h/src/msg.c",
+    "output": "/home/mouse/Documents/c/libraries/merror.h/obj/msg.o"
+  }
+]

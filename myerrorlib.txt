@@ -1,0 +1,115 @@
+*merrorlib.txt*    Documentation for MerrorLib
+
+==============================================================================
+
+								   MERRORLIB
+
+==============================================================================
+
+INTRODUCTION                                      *merrorlib-introduction*
+
+	This is a simple error handling library for C. Nothing fancy, just prints
+    a code or/and a message to stderr. To make it a bit safer the library only
+    exposes the functions not the actual error. The error has also a copy to be
+    compared with to avoid to prevent unintended modifications.
+
+==============================================================================
+
+USAGE                                             *merrorlib-usage*
+
+ADD THE LIBRARY TO YOUR PROJECT                   *merrorlib-add-library*
+
+    Just add the static or dynmaic library to your project and include the
+    merror.h header file. After that just include the header file in your source
+    file and you are ready to go.
+
+        `#include "merror.h"
+
+
+------------------------------------------------------------------------------
+
+SET AN ERROR                                      *merrorlib-set-error*
+
+
+    To set an error just call the function `setError` with the error code. The error
+    code is and enum so you can either use the enum or the number.
+
+        `setError(301);
+        `setError(FILE_NOT_OPEN);
+
+    Note: Using the enum may make the code easier to read. The function returns 
+    a bool to indicate if the error was set successfully.
+
+
+------------------------------------------------------------------------------
+
+PRINT THE ERROR                                    *merrorlib-print-error*
+
+    Use `errorP`, `errorPnum`, or `errorPmsg` to print the error:
+
+        `errorP();`      // Prints the error code and message.
+        `errorPnum();`   // Prints only the error code.
+        `errorPmsg();`   // Prints only the message.
+
+
+------------------------------------------------------------------------------
+
+HANDLE THE ERROR                                   *merrorlib-handle-error*
+
+    After handling an error, mark it as handled with `handle()`. This sets the 
+    handled flag to true but does not clear the error. To reverse this, use 
+    `unhandle()`. To clear the error, use `clearError()`:
+
+        `handle();
+        `unhandle();
+        `clearError();`
+
+    Note: A handled error can still be accessed and printed before being 
+    cleared or rewritten.
+
+
+------------------------------------------------------------------------------
+
+CHECK THE ERROR                                    *merrorlib-check-error*
+
+    To check if there is an error, use `hasError()`. It returns true if an error 
+    exists. To check if an error is handled, use `isHandled()`. It returns true 
+    if the handled flag is set.
+
+        `bool errorExists = hasError();
+        `bool isErrorHandled = isHandled();
+
+
+------------------------------------------------------------------------------
+
+ERROR CODES                                        *merrorlib-error-codes*
+
+    Below are the codes, enums, and messages for the errors. They are grouped 
+    by 100s for different types of errors:
+
+    | Code | Enum                     | Message                      |
+    |------|--------------------------|------------------------------|
+    | 000  | NO_ERROR                 | No error                     |
+    | 001  | UNKNOWN_ERROR            | Unknown Error                |
+    | 002  | MESSAGE_NOT_FOUND        | Message Not Found            |
+    | 100  | NO_ARGUMENTS             | No Arguments                 |
+    | 101  | INVALID_COMMAND          | Invalid Command              |
+    | 102  | TOO_FEW_ARGUMENTS        | Too Few Arguments            |
+    | 103  | TOO_MANY_ARGUMENTS       | Too Many Arguments           |
+    | 104  | NULL_ARGUMENT            | Null Argument                |
+    | 105  | INVALID_FLAG             | Invalid Flag                 |
+    | 106  | INVALID_ARGUMENT         | Invalid Arguments            |
+    | 107  | INVALID_ARGUMENT_TYPE    | Invalid Argument Type        |
+    | 108  | INVALID_ARGUMENT_VALUE   | Invalid Argument Value       |
+    | 109  | INVALID_ARGUMENT_FORMAT  | Invalid Argument Format      |
+    | 200  | DIRECTORY_NOT_FOUND      | Directory Was Not Found      |
+    | 201  | DIRECTORY_NOT_EMPTY      | Directory Is Not Empty       |
+    | 202  | DIRECTORY_FAIL_CREATE    | Directory Failed To Create   |
+    | 300  | FILE_NOT_FOUND           | File Not Found               |
+    | 301  | FILE_NOT_OPEN            | File Not Open                |
+    | 302  | FILE_NOT_CLOSED          | File Not Closed              |
+    | 303  | FILE_ALREADY_EXISTS      | File Already Exists          |
+
+==============================================================================
+
+vim:tw=78:ts=8:ft=help:norl:

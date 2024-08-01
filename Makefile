@@ -67,3 +67,8 @@ test: $(TEST_EXEC)
 clean:
 	@echo "Cleaning up"
 	@rm -rf $(OBJ_DIR) $(BIN_DIR) $(LIB_DIR) error.log
+
+# Target for using bear to generate compile_commands.json
+.PHONY: bear
+bear:
+	@bear -- $(MAKE) clean all
